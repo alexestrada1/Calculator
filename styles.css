@@ -1,0 +1,30 @@
+.calculator{
+    display: flex;
+    background-color: blue;
+    height: 500px;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.screen{
+background-color: red;
+height: 100px;
+width: 300px;
+
+}
+.container{
+background-color: aqua;
+height: 300px;
+width: 300px;
+display: flex;
+display: grid;
+grid-template-columns: repeat(4, 50px);
+grid-template-rows: repeat(4, 50px);
+justify-content: center;
+}
+
+.calc-item{
+    border: 1px solid rgba(0, 0, 0, 0.8);
+padding: 10px;
+}
