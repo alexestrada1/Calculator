@@ -1,26 +1,29 @@
 const container = document.getElementsByClassName('container');
 let firstNumber = '';
 let secondNumber = '';
-let currentOperator = null;
+let currentOperator = '';
+let operatorChosen = false;
+const screen = document.querySelector('.screen');
 
 //The math Functions
 function add(a, b){
     return a+b;
     }
     
-    function subtract(a, b){
+function subtract(a, b){
     return a-b;
     }
-    function multiply(a, b){
+function multiply(a, b){
     return a*b;
     }
-    function divide(a, b){
+function divide(a, b){
     return a/b;
     }
     
-    function operate(operator, a, b) {
+function operate(operator, a, b) {
         a = Number(a)
         b = Number(b)
+
         switch (operator) {
           case '+':
             return add(a, b)
@@ -29,7 +32,7 @@ function add(a, b){
           case 'x':
             return multiply(a, b)
           case '/':
-            if (b === 0) return null
+            if (b === 0) return 'undefined'
             else return divide(a, b)
           default:
             return null
@@ -67,15 +70,56 @@ for(i in array){
     }
     container[0].appendChild(calcItem); 
 }
+
+if(operatorChosen == false){
 const numberButtons = document.querySelectorAll('.number');
-console.log(numberButtons);
 numberButtons.forEach((number) =>{
 number.addEventListener(('click'), function(){
-    firstNumber = this.id;
+    screen.textContent += this.id;
 })
 });
+}
 
 const operators = document.querySelectorAll('.operator');
-console.log(operators);
+operators.forEach((operator) =>{
+  operator.addEventListener(('click'), function(){
+  firstNumber = screen.textContent;
+  currentOperator = this.id;
+  console.log(currentOperator)
+  operatorChosen = true;
+  console.log(firstNumber);
+  console.log(operatorChosen);
+  screen.textContent='';
+   getSecondNumber();
+  })
+  });
 
+  function getSecondNumber(){
+  if(operatorChosen){
+    screen.textContent = ''
+    numberButtons.forEach((number) =>{
+      number.addEventListener(('click'), function(){
+          screen.textContent += this.id 
+      },)
+      });
+  }
+}
+
+const equals= document.querySelector('.equal');
+equals.addEventListener(('click'), function(){
+  secondNumber = screen.textContent; 
+  screen.textContent = operate(currentOperator, firstNumber, secondNumber)
+})
+
+const clear= document.querySelector('.clear');
+clear.addEventListener(('click') , function(){
+  screen.textContent = ''
+  operatorChosen = false;
+})
+
+const del = document.querySelector('.delete');
+del.addEventListener(('click'), function(){
+screen.textContent= screen.textContent.slice(0, -1);
+
+})
 
