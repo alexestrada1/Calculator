@@ -11,7 +11,13 @@
 background-color: red;
 height: 100px;
 width: 300px;
-
+display: flex;
+flex-direction: column;
+}
+.firstScreen, .secondScreen{
+height: 50px;
+width: 250px;
+padding: 15px;
 }
 .container{
 background-color: aqua;

@@ -3,14 +3,15 @@ let firstNumber = '';
 let secondNumber = '';
 let currentOperator = '';
 let operatorChosen = false;
-const screen = document.querySelector('.screen');
+const firstScreen= document.querySelector('.firstScreen');
+const secondScreen = document.querySelector('.secondScreen');
 
 //The math Functions
 function add(a, b){
     return a+b;
     }
     
-function subtract(a, b){
+function substract(a, b){
     return a-b;
     }
 function multiply(a, b){
@@ -70,12 +71,17 @@ for(i in array){
     }
     container[0].appendChild(calcItem); 
 }
+const numberButtons = document.querySelectorAll('.number');
 
 if(operatorChosen == false){
-const numberButtons = document.querySelectorAll('.number');
 numberButtons.forEach((number) =>{
 number.addEventListener(('click'), function(){
-    screen.textContent += this.id;
+  if(firstScreen.textContent.includes("=")){
+    secondScreen.textContent = '';
+    firstScreen.textContent = '';
+  }
+  secondScreen.textContent += this.id;
+  firstScreen.textContent +=this.id
 })
 });
 }
@@ -83,43 +89,51 @@ number.addEventListener(('click'), function(){
 const operators = document.querySelectorAll('.operator');
 operators.forEach((operator) =>{
   operator.addEventListener(('click'), function(){
-  firstNumber = screen.textContent;
+    if(firstScreen.textContent.includes("=")){
+      firstScreen.textContent = ''
+      firstScreen.textContent += firstNumber
+    }
+  firstNumber = secondScreen.textContent;
   currentOperator = this.id;
+  if(!firstScreen.textContent.includes('+' , '-', 'x' , '/')){
+    firstScreen.textContent += this.id;
+  }
+  
   console.log(currentOperator)
   operatorChosen = true;
   console.log(firstNumber);
   console.log(operatorChosen);
-  screen.textContent='';
-   getSecondNumber();
+  secondScreen.textContent='';
   })
   });
 
-  function getSecondNumber(){
-  if(operatorChosen){
-    screen.textContent = ''
-    numberButtons.forEach((number) =>{
-      number.addEventListener(('click'), function(){
-          screen.textContent += this.id 
-      },)
-      });
-  }
-}
+ 
 
 const equals= document.querySelector('.equal');
 equals.addEventListener(('click'), function(){
-  secondNumber = screen.textContent; 
-  screen.textContent = operate(currentOperator, firstNumber, secondNumber)
+  firstScreen.textContent += this.textContent;
+  secondNumber = secondScreen.textContent; 
+  secondScreen.textContent = operate(currentOperator, firstNumber, secondNumber)
+  currentOperator = ''
+  firstScreen.textContent += secondScreen.textContent;
+  firstNumber = secondScreen.textContent;
+
 })
 
 const clear= document.querySelector('.clear');
 clear.addEventListener(('click') , function(){
-  screen.textContent = ''
+  firstScreen.textContent =''
+  secondScreen.textContent = ''
   operatorChosen = false;
 })
 
 const del = document.querySelector('.delete');
 del.addEventListener(('click'), function(){
-screen.textContent= screen.textContent.slice(0, -1);
-
+  let str = firstScreen.textContent;
+  secondScreen.textContent = secondScreen.textContent.slice(0, -1);
+  if(firstScreen.textContent.includes(secondScreen.textContent)){
+    firstScreen.textContent =firstScreen.textContent.slice(0, -1);
+  }
+  
 })
 
