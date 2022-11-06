@@ -3,6 +3,7 @@ let firstNumber = '';
 let secondNumber = '';
 let currentOperator = '';
 let operatorChosen = false;
+let dotChosen = false;
 const firstScreen= document.querySelector('.firstScreen');
 const secondScreen = document.querySelector('.secondScreen');
 
@@ -44,7 +45,7 @@ function operate(operator, a, b) {
 
 //This creates the items for the calculator
 // I use an array to create a div for each type of number and operator.
-array = [0,1,2,3,4,5,6,7,8,9, '+' , 'x', '/', '-', '=', 'clear', 'delete']
+array = [ 'clear', 'delete', 9, 8, 7, '+', 6, 5, 4, '-', 3, 2, 1,'x', 0, '.', '=','/' ]
 for(i in array){
     var calcItem = document.createElement('div');
     calcItem.className = 'calc-item'
@@ -53,9 +54,14 @@ for(i in array){
     calcItem.textContent = array[i];
     calcItem.classList.add('equal');
     }
+    else if(array[i] == '.'){
+    calcItem.id= 'dot'
+    calcItem.textContent = array[i];
+    calcItem.classList.add('dot');
+    }
     else if(array[i]>=0){
-    calcItem.id= i
-    calcItem.textContent = i;
+    calcItem.id= array[i]
+    calcItem.textContent = array[i];
     calcItem.classList.add('number');
 
     }
@@ -107,7 +113,18 @@ operators.forEach((operator) =>{
   })
   });
 
- 
+ const dot= document.querySelector('.dot');
+ dot.addEventListener(('click'), function(){
+  if(dotChosen == false){
+    dotChosen =true;
+    secondScreen.textContent += '.';
+    firstScreen.textContent += '.';
+  }
+  if(operatorChosen=true){
+    dotChosen=false;
+  }
+  
+ })
 
 const equals= document.querySelector('.equal');
 equals.addEventListener(('click'), function(){
@@ -125,6 +142,8 @@ clear.addEventListener(('click') , function(){
   firstScreen.textContent =''
   secondScreen.textContent = ''
   operatorChosen = false;
+  dotChosen = false;
+
 })
 
 const del = document.querySelector('.delete');
